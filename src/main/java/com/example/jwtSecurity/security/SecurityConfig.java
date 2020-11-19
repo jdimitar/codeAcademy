@@ -66,6 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.disable()
 			.csrf()
 			.disable()
+//			.formLogin()
+//	        .loginPage("/login.html")
+//	        .permitAll()
+//	        .successForwardUrl("/index")
+//	        .and()
 			.exceptionHandling()
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
@@ -73,7 +78,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/auth/signUpAdmin", "/auth/signUpUser", "/auth/signIn")
+			.antMatchers("/**",
+				    "/index",
+				    "/favicon.ico",
+				    "/**/*.png",
+				    "/**/*.gif",
+				    "/**/*.svg",
+				    "/**/*.jpg",
+				    "/**/*.html",
+				    "/**/*.css",
+				    "/**/*.js")
+			.permitAll()
+			.antMatchers("/auth/signUpAdmin", "/auth/signUpUser", "/auth/signIn", "/signup", "/login")
 			.permitAll()
 			.anyRequest()
 			.authenticated();
@@ -86,6 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring()
 		.antMatchers("/swagger-ui.html")
 		.antMatchers("/swagger-documents/**")
+		.antMatchers("/**", "/resources/**", "index.html","signup", "login", "signup.html", "login.html")
+        .antMatchers("/resources/**","/templates/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
 		;
 	}
 
